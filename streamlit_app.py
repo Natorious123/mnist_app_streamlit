@@ -7,10 +7,8 @@ import cv2
 from PIL import Image, ImageOps
 from skimage import exposure
 
-st.set_page_config(page_title="MNIST Camera", page_icon="🔢")
-st.title("Camera MNIST classifier")
-
-#@st.cache_resource
+st.set_page_config(page_title="Mobile MNIST", page_icon="🔢")
+st.title("Mobile MNIST")
 
 def crop_digit(image):
     # Step 1: Convert to grayscale
@@ -64,6 +62,18 @@ def preprocess_image(image):
 model = load_model("mnist_model_10_fold.keras")
 
 img_data = st.camera_input("Take a photo of a single digit on a white background")
+
+st.markdown("""
+    <style>
+    video {
+        width: 100% !important;
+        height: auto !important;
+        aspect-ratio: 3 / 4;
+        object-fit: cover;
+    }
+    </style>
+""", unsafe_allow_html=True)
+
 
 if img_data is not None:
     preprocessed = preprocess_image(img_data)
