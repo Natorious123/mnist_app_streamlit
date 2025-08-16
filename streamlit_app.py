@@ -8,7 +8,9 @@ from PIL import Image, ImageOps
 from skimage import exposure
 
 st.set_page_config(page_title="Mobile MNIST", page_icon="🔢")
-st.title("Mobile MNIST")
+col1, col2, col3 = st.columns(3)
+with col2:
+    st.title("Mobile MNIST")
 
 def crop_digit(image):
     # Step 1: Convert to grayscale
@@ -61,29 +63,8 @@ def preprocess_image(image):
 
 model = load_model("mnist_model_10_fold.keras")
 
-img_data = st.camera_input("Take a photo of a single digit on a white background")
-
-st.markdown("""
-    <style>
-    /* Target the camera input container */
-    div[data-testid="stCameraInput"] video {
-        aspect-ratio: 9 / 16 !important;
-        width: 100% !important;
-        height: auto !important;
-        object-fit: cover !important;
-        border-radius: 12px;
-    }
-
-    /* Optional: center the camera input */
-    div[data-testid="stCameraInput"] {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        flex-direction: column;
-    }
-    </style>
-""", unsafe_allow_html=True)
-
+with col2:
+    img_data = st.camera_input("Take a photo of a single digit on a white background")
 
 if img_data is not None:
     preprocessed = preprocess_image(img_data)
@@ -91,9 +72,9 @@ if img_data is not None:
     prediction = model.predict(preprocessed)
 
     predicted_label = np.argmax(prediction)
-
-    st.metric("Prediction", predicted_label)
+    with col2:
+        st.metric("Prediction", predicted_label)
 
     preprocessed_display = preprocessed.reshape(1,28,28,1)
-
-    st.image(preprocessed_display, caption="Preprocessed 28×28")
+    with col2:
+        st.image(preprocessed_display, caption="Preprocessed 28×28")
