@@ -3,4 +3,5 @@ pillow
 opencv-python
 streamlit
 pandas
-skimage
+scikit-image
+
