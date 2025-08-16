@@ -87,5 +87,6 @@ if img_data is not None:
     st.markdown(f"""<p style='text-align: center; color: white; font-size: 24pt'>Prediction: {predicted_label}</p>""", unsafe_allow_html=True)
 
     preprocessed_display = preprocessed.reshape(1,28,28,1)
-
-    st.image(preprocessed_display, caption="Preprocessed 28×28")
+    col1, col2, col3 = st.columns([1, 2, 1]) 
+    with col2:
+        st.image(preprocessed_display, caption="Preprocessed 28×28")
