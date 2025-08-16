@@ -65,11 +65,21 @@ img_data = st.camera_input("Take a photo of a single digit on a white background
 
 st.markdown("""
     <style>
-    video {
+    /* Target the camera input container */
+    div[data-testid="stCameraInput"] video {
+        aspect-ratio: 9 / 16 !important;
         width: 100% !important;
         height: auto !important;
-        aspect-ratio: 9 / 16;
-        object-fit: cover;
+        object-fit: cover !important;
+        border-radius: 12px;
+    }
+
+    /* Optional: center the camera input */
+    div[data-testid="stCameraInput"] {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
     }
     </style>
 """, unsafe_allow_html=True)
