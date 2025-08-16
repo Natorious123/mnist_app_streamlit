@@ -10,9 +10,7 @@ from skimage import exposure
 st.set_page_config(page_title="MNIST Camera", page_icon="🔢")
 st.title("Camera MNIST classifier")
 
-@st.cache_resource
-def load_model():
-    return load_model("mnist_model_10_fold.keras")
+#@st.cache_resource
 
 def crop_digit(image):
     # Step 1: Convert to grayscale
@@ -63,7 +61,7 @@ def preprocess_image(image):
     img_array = img_array.astype('float32')  # ? Only cast to float
     return img_array.reshape(1,28,28)
 
-model = load_model()
+model = load_model("mnist_model_10_fold.keras")
 
 img_data = st.camera_input("Take a photo of a single digit on a white background")
 
@@ -74,6 +72,8 @@ if img_data is not None:
 
     predicted_label = np.argmax(prediction)
 
-    st.metric("Prediction", predicted_label, delta=f"confidence {prediction[0]:.2f}")
+    st.metric("Prediction", predicted_label)
 
-    st.image(preprocessed, caption="Preprocessed 28×28")
+    preprocessed_display = preprocessed.reshape(1,28,28,1)
+
+    st.image(preprocessed_display, caption="Preprocessed 28×28")
