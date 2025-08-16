@@ -67,8 +67,6 @@ img_data = st.camera_input("Take a photo of a single digit on a white background
 
 # Your camera input inside a container
 
-st.camera_input("Take a photo")
-
 # Inject CSS to center and style it
 st.markdown("""
     <style>
