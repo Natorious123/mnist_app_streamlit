@@ -9,7 +9,8 @@ from skimage import exposure
 
 st.set_page_config(page_title="Mobile MNIST", page_icon="🔢")
 
-st.title("Mobile MNIST")
+#st.title("Mobile MNIST")
+st.markdown("<h1 style='text-align: center; color: white;'>Mobile MNIST</h1>", unsafe_allow_html=True)
 
 def crop_digit(image):
     # Step 1: Convert to grayscale
@@ -70,42 +71,7 @@ img_data = st.camera_input("Take a photo of a single digit on a white background
 # Inject CSS to center and style it
 st.markdown("""
     <style>
-    /* Center the camera input container */
-    div[data-testid="stCameraInput"] {
-        display: flex !important;
-        justify-content: center !important;
-        align-items: center !important;
-        flex-direction: column !important;
-        margin: auto !important;
-        max-width: 360px !important;
-    }
 
-    /* Force portrait aspect ratio on the video preview */
-    div[data-testid="stCameraInput"] video {
-        aspect-ratio: 9 / 16 !important;
-        width: 100% !important;
-        height: auto !important;
-        object-fit: cover !important;
-        border-radius: 12px;
-    }
-        /* Center all text inside the main content */
-    .main {
-        text-align: center !important;
-    }
-
-    /* Optional: center buttons too */
-    button {
-        margin: auto !important;
-        display: block !important;
-    }
-
-
-    /* Remove padding on mobile */
-    @media screen and (max-width: 480px) {
-        .main {
-            padding: 0 !important;
-        }
-    }
     </style>
 """, unsafe_allow_html=True)
 
