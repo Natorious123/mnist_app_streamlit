@@ -64,7 +64,8 @@ def preprocess_image(image):
 model = load_model("mnist_model_10_fold.keras")
 
 
-img_data = st.camera_input("Take a photo of a single digit on a white background")
+img_data = st.camera_input()
+st.markdown("<p style='text-align: center; color: white;'>Take a photo of a single digit on a white background</p>", unsafe_allow_html=True)
 
 # Your camera input inside a container
 
@@ -83,7 +84,7 @@ if img_data is not None:
     predicted_label = np.argmax(prediction)
 
     st.metric("Prediction", predicted_label)
-    st.markdown("<p style='text-align: center; color: white;'>Prediction: {predicted_label}</p>", unsafe_allow_html=True)
+    #st.markdown("<p style='text-align: center; color: white;'>Prediction: {predicted_label}</p>", unsafe_allow_html=True)
 
     preprocessed_display = preprocessed.reshape(1,28,28,1)
 
