@@ -7,7 +7,7 @@ import cv2
 from PIL import Image, ImageOps
 from skimage import exposure
 
-st.set_page_config(page_title="Mobile MNIST", page_icon="🔢")
+st.set_page_config(layout= "centered", page_title="Mobile MNIST", page_icon="🔢")
 
 #st.title("Mobile MNIST")
 st.markdown("<h1 style='text-align: center; color: white;'>Mobile MNIST</h1>", unsafe_allow_html=True)
@@ -83,6 +83,7 @@ if img_data is not None:
     predicted_label = np.argmax(prediction)
 
     st.metric("Prediction", predicted_label)
+    st.markdown("<p style='text-align: center; color: white;'>Prediction</p>", unsafe_allow_html=True)
 
     preprocessed_display = preprocessed.reshape(1,28,28,1)
 
