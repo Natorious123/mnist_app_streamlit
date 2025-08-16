@@ -66,8 +66,8 @@ model = load_model("mnist_model_10_fold.keras")
 img_data = st.camera_input("Take a photo of a single digit on a white background")
 
 # Your camera input inside a container
-with st.container():
-    st.camera_input("Take a photo")
+
+st.camera_input("Take a photo")
 
 # Inject CSS to center and style it
 st.markdown("""
