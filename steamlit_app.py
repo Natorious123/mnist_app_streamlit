@@ -8,7 +8,7 @@ st.title("Camera MNIST classifier")
 
 @st.cache_resource
 def load_model():
-    return tf.keras.models.load_model("mnist_model.keras")
+    return tf.keras.models.load_model("mnist_model_10_fold.keras")
 
 model = load_model()
 
@@ -30,5 +30,6 @@ if img_data is not None:
     probs = model.predict(arr, verbose=0)[0]
     pred = int(np.argmax(probs))
     st.metric("Prediction", pred, delta=f"confidence {probs[pred]:.2f}")
+
 
     st.image(img.resize((112, 112)), caption="Preprocessed 28×28", width=112)
