@@ -8,9 +8,8 @@ from PIL import Image, ImageOps
 from skimage import exposure
 
 st.set_page_config(page_title="Mobile MNIST", page_icon="🔢")
-col1, col2, col3 = st.columns(3)
-with col2:
-    st.title("Mobile MNIST")
+
+st.title("Mobile MNIST")
 
 def crop_digit(image):
     # Step 1: Convert to grayscale
@@ -63,8 +62,54 @@ def preprocess_image(image):
 
 model = load_model("mnist_model_10_fold.keras")
 
-with col2:
-    img_data = st.camera_input("Take a photo of a single digit on a white background")
+
+img_data = st.camera_input("Take a photo of a single digit on a white background")
+
+# Your camera input inside a container
+with st.container():
+    st.camera_input("Take a photo")
+
+# Inject CSS to center and style it
+st.markdown("""
+    <style>
+    /* Center the camera input container */
+    div[data-testid="stCameraInput"] {
+        display: flex !important;
+        justify-content: center !important;
+        align-items: center !important;
+        flex-direction: column !important;
+        margin: auto !important;
+        max-width: 360px !important;
+    }
+
+    /* Force portrait aspect ratio on the video preview */
+    div[data-testid="stCameraInput"] video {
+        aspect-ratio: 9 / 16 !important;
+        width: 100% !important;
+        height: auto !important;
+        object-fit: cover !important;
+        border-radius: 12px;
+    }
+        /* Center all text inside the main content */
+    .main {
+        text-align: center !important;
+    }
+
+    /* Optional: center buttons too */
+    button {
+        margin: auto !important;
+        display: block !important;
+    }
+
+
+    /* Remove padding on mobile */
+    @media screen and (max-width: 480px) {
+        .main {
+            padding: 0 !important;
+        }
+    }
+    </style>
+""", unsafe_allow_html=True)
 
 if img_data is not None:
     preprocessed = preprocess_image(img_data)
@@ -72,9 +117,9 @@ if img_data is not None:
     prediction = model.predict(preprocessed)
 
     predicted_label = np.argmax(prediction)
-    with col2:
-        st.metric("Prediction", predicted_label)
+
+    st.metric("Prediction", predicted_label)
 
     preprocessed_display = preprocessed.reshape(1,28,28,1)
-    with col2:
-        st.image(preprocessed_display, caption="Preprocessed 28×28")
+
+    st.image(preprocessed_display, caption="Preprocessed 28×28")
