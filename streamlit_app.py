@@ -64,7 +64,7 @@ def preprocess_image(image):
 model = load_model("mnist_model_10_fold.keras")
 
 
-img_data = st.camera_input()
+img_data = st.camera_input(" ")
 st.markdown("<p style='text-align: center; color: white;'>Take a photo of a single digit on a white background</p>", unsafe_allow_html=True)
 
 # Your camera input inside a container
