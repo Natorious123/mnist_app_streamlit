@@ -83,7 +83,7 @@ if img_data is not None:
     predicted_label = np.argmax(prediction)
 
     st.metric("Prediction", predicted_label)
-    #st.markdown("<p style='text-align: center; color: white;'>Prediction: {predicted_label}</p>", unsafe_allow_html=True)
+    st.markdown("<p style='text-align: center; color: white;'>Prediction: {predicted_label}</p>", unsafe_allow_html=True)
 
     preprocessed_display = preprocessed.reshape(1,28,28,1)
 
