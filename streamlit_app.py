@@ -68,7 +68,7 @@ st.markdown("""
     video {
         width: 100% !important;
         height: auto !important;
-        aspect-ratio: 3 / 4;
+        aspect-ratio: 9 / 16;
         object-fit: cover;
     }
     </style>
