@@ -19,7 +19,7 @@ def crop_digit(image):
     print(image_np.shape)
     gray = cv2.cvtColor(image_np, cv2.COLOR_RGB2GRAY)
 
-    scale = 1.2  # zoom factor
+    scale = 1.4  # zoom factor
     h, w = gray.shape[:2]
     new_w = int(w / scale)
     new_h = int(h / scale)
@@ -101,6 +101,7 @@ if img_data is not None:
     with col2:
 
         st.image(preprocessed_display, caption="Preprocessed 28×28")
+
 
 
 
