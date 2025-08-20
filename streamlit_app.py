@@ -65,7 +65,7 @@ def preprocess_image(image):
 
 model = load_model("mnist_model_10_fold.keras")
 
-st.markdown("<p style='text-align: center; color: white;'>Take a photo of a single digit on a white background</p>", unsafe_allow_html=True)
+st.markdown("<p style='text-align: center; color: white;'>Take a photo of a single digit on a white background, make sure the digit is dark, ideally written with a black marker/sharpie. The code crops to the largest blob, and treats any brightness around light gray or white as plain white.</p>", unsafe_allow_html=True)
 img_data = st.camera_input("")
 
 
@@ -93,3 +93,4 @@ if img_data is not None:
     with col2:
 
         st.image(preprocessed_display, caption="Preprocessed 28×28")
+
