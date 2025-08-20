@@ -15,45 +15,57 @@ st.markdown("<h1 style='text-align: center; color: white;'>Mobile MNIST</h1>", u
 def crop_digit(image):
     # Step 1: Convert to grayscale
     image_np = np.array(image)
-    print(type(image_np))
-    print(image_np.shape)
     gray = cv2.cvtColor(image_np, cv2.COLOR_RGB2GRAY)
 
-    scale = 1.4  # zoom factor
+    # Step 2: Zoom crop (scale factor)
+    scale = 1.4
     h, w = gray.shape[:2]
     new_w = int(w / scale)
     new_h = int(h / scale)
     x1 = (w - new_w) // 2
     y1 = (h - new_h) // 2
-    crop = gray[y1:y1+new_h, x1:x1+new_w] 
+    crop = gray[y1:y1+new_h, x1:x1+new_w]
     st.image(crop)
 
-    # Step 2: Threshold to binary
+    # Step 3: Threshold to binary
     _, binary = cv2.threshold(crop, 50, 255, cv2.THRESH_BINARY_INV)
     st.image(binary)
-    # Step 3: Find contours
+
+    # Step 4: Find contours
     contours, _ = cv2.findContours(binary, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
 
     if contours:
-        # Step 4: Crop to bounding box
-        cnt = max(contours, key=cv2.contourArea)
+        img_center = np.array([new_w / 2, new_h / 2])
+
+        def contour_score(cnt):
+            x, y, bw, bh = cv2.boundingRect(cnt)
+            blob_center = np.array([x + bw / 2, y + bh / 2])
+            dist = np.linalg.norm(blob_center - img_center)
+            area = cv2.contourArea(cnt)
+            return area / (1 + dist)  # bigger area + closer center = higher score
+
+        # Pick contour with best score
+        cnt = max(contours, key=contour_score)
+
+        # Step 5: Crop to bounding box
         x, y, w, h = cv2.boundingRect(cnt)
         cropped = binary[y:y+h, x:x+w]
 
-        # Step 5: Resize while preserving aspect ratio
-        scale = 23.0 / max(w, h)  # scale to fit within 24x24 box
-        resized = cv2.resize(cropped, (int(w*scale), int(h*scale)), interpolation=cv2.INTER_AREA)
+        # Step 6: Resize while preserving aspect ratio
+        scale_factor = 23.0 / max(w, h)
+        resized = cv2.resize(cropped, (int(w*scale_factor), int(h*scale_factor)), interpolation=cv2.INTER_AREA)
 
-        # Step 6: Pad to 28x28
+        # Step 7: Pad to 28x28
         padded = np.zeros((28, 28), dtype=np.uint8)
         x_offset = (28 - resized.shape[1]) // 2
         y_offset = (28 - resized.shape[0]) // 2
         padded[y_offset:y_offset+resized.shape[0], x_offset:x_offset+resized.shape[1]] = resized
-        processed_pil = Image.fromarray(padded)
 
-        return processed_pil
+        return Image.fromarray(padded)
+
     else:
         return np.zeros((28, 28), dtype=np.uint8)  # fallback: blank image
+
 
 
 def preprocess_image(image):
@@ -102,6 +114,7 @@ if img_data is not None:
     with col2:
 
         st.image(preprocessed_display, caption="Preprocessed 28×28")
+
 
 
 
