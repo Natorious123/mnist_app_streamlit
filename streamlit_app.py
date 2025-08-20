@@ -20,7 +20,7 @@ def crop_digit(image):
     gray = cv2.cvtColor(image_np, cv2.COLOR_RGB2GRAY)
 
     # Step 2: Threshold to binary
-    _, binary = cv2.threshold(gray, 70, 255, cv2.THRESH_BINARY_INV)
+    _, binary = cv2.threshold(gray, 60, 255, cv2.THRESH_BINARY_INV)
 
     # Step 3: Find contours
     contours, _ = cv2.findContours(binary, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
@@ -49,6 +49,8 @@ def crop_digit(image):
 
 def preprocess_image(image):
     img = Image.open(image)#.convert('L')            # Convert to grayscale
+    area = (100, 200, 100, 200)
+    img = img.crop(area)
     img = crop_digit(img)
     img = img.resize((28, 28))                            # Resize to 28x28
     #img = ImageOps.invert(img)
@@ -89,4 +91,5 @@ if img_data is not None:
     preprocessed_display = preprocessed.reshape(1,28,28,1)
     col1, col2, col3 = st.columns([1, 2, 1]) 
     with col2:
+
         st.image(preprocessed_display, caption="Preprocessed 28×28")
