@@ -28,7 +28,7 @@ def crop_digit(image):
     st.image(crop)
 
     # Step 3: Threshold to binary
-    _, binary = cv2.threshold(crop, 30, 255, cv2.THRESH_BINARY_INV)
+    _, binary = cv2.threshold(crop, 0, 225, cv2.THRESH_BINARY_INV)
     st.image(binary)
 
     # Step 4: Find contours
@@ -114,6 +114,7 @@ if img_data is not None:
     with col2:
 
         st.image(preprocessed_display, caption="Preprocessed 28×28")
+
 
 
 
