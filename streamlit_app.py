@@ -25,11 +25,11 @@ def crop_digit(image):
     x1 = (w - new_w) // 2
     y1 = (h - new_h) // 2
     crop = gray[y1:y1+new_h, x1:x1+new_w]
-    st.image(crop)
+    crop_to_display = crop
 
     # Step 3: Threshold to binary
     _, binary = cv2.threshold(crop, 100, 255, cv2.THRESH_BINARY_INV)
-    st.image(binary)
+    binary_to_display = binary
 
     # Step 4: Find contours
     contours, _ = cv2.findContours(binary, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
@@ -114,6 +114,9 @@ if img_data is not None:
     with col2:
 
         st.image(preprocessed_display, caption="Preprocessed 28×28")
+        st.image(binary_to_display)
+        st.image(crop_to_display)
+
 
 
 
