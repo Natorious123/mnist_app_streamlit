@@ -39,15 +39,15 @@ def crop_digit(image):
     if contours:
         img_center = np.array([new_w / 2, new_h / 2])
 
-    def contour_score(cnt, size_weight=1.0, dist_weight=1.2):
-        x, y, bw, bh = cv2.boundingRect(cnt)
-        blob_center = np.array([x + bw / 2, y + bh / 2])
-        dist = np.linalg.norm(blob_center - img_center)
-        area = cv2.contourArea(cnt)
+        def contour_score(cnt, size_weight=1.0, dist_weight=1.2):
+            x, y, bw, bh = cv2.boundingRect(cnt)
+            blob_center = np.array([x + bw / 2, y + bh / 2])
+            dist = np.linalg.norm(blob_center - img_center)
+            area = cv2.contourArea(cnt)
 
-        # Higher size_weight → favors bigger blobs more
-        # Higher dist_weight → penalizes distance more
-        return (area ** size_weight) / ((1 + dist) ** dist_weight)
+            # Higher size_weight → favors bigger blobs more
+            # Higher dist_weight → penalizes distance more
+            return (area ** size_weight) / ((1 + dist) ** dist_weight)
 
 
         # Pick contour with best score
@@ -122,6 +122,7 @@ if img_data is not None:
         st.image(preprocessed_display, caption="Preprocessed 28×28")
         st.image(binary_to_display)
         st.image(crop_to_display)
+
 
 
 
