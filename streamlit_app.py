@@ -18,7 +18,7 @@ def crop_digit(image):
     gray = cv2.cvtColor(image_np, cv2.COLOR_RGB2GRAY)
 
     # Step 2: Zoom crop (scale factor)
-    scale = 1.4
+    scale = 1.8
     h, w = gray.shape[:2]
     new_w = int(w / scale)
     new_h = int(h / scale)
@@ -126,6 +126,7 @@ if img_data is not None:
         st.image(preprocessed_display, caption="Preprocessed 28×28")
         st.image(binary_to_display)
         st.image(crop_to_display)
+
 
 
 
