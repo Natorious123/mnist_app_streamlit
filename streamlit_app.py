@@ -32,7 +32,7 @@ def crop_digit(image):
     #binary = cv2.threshold(crop, 128, 255, cv2.THRESH_BINARY_INV)
     binary = ~crop
     binary = cv2.normalize(binary, None, 0, 255, cv2.NORM_MINMAX)
-    binary[binary < 75] = 0
+    binary[binary < 70] = 0
     global binary_to_display
     binary_to_display = binary
     
@@ -43,7 +43,7 @@ def crop_digit(image):
     if contours:
         img_center = np.array([new_w / 2, new_h / 2])
 
-        def contour_score(cnt, size_weight=1.0, dist_weight=2):
+        def contour_score(cnt, size_weight=1.0, dist_weight=3.0):
             x, y, bw, bh = cv2.boundingRect(cnt)
             blob_center = np.array([x + bw / 2, y + bh / 2])
             dist = np.linalg.norm(blob_center - img_center)
@@ -126,6 +126,7 @@ if img_data is not None:
         st.image(preprocessed_display, caption="Preprocessed 28×28")
         st.image(binary_to_display)
         st.image(crop_to_display)
+
 
 
 
