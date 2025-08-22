@@ -29,8 +29,8 @@ def crop_digit(image):
     crop_to_display = crop
 
     # Step 3: Threshold to binary
-   # _, binary = cv2.threshold(crop, 128, 255, cv2.THRESH_BINARY_INV)
-    binary = ~crop
+    binary = cv2.threshold(crop, 128, 255, cv2.THRESH_BINARY_INV)
+    #binary = ~crop
     global binary_to_display
     binary_to_display = binary
 
@@ -123,6 +123,7 @@ if img_data is not None:
         st.image(preprocessed_display, caption="Preprocessed 28×28")
         st.image(binary_to_display)
         st.image(crop_to_display)
+
 
 
 
